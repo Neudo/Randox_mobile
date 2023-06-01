@@ -8,8 +8,8 @@
     </ion-header>
     <ion-content class="ion-padding">
       <div class="wrapper-cta">
-        <router-link class="cta" to="/post">Inscription</router-link>
-        <router-link class="cta" to="/post">Connexion</router-link>
+        <router-link class="cta cta-nav" to="/inscription">Inscription</router-link>
+        <router-link class="cta cta-nav" to="/connexion">Connexion</router-link>
       </div>
 
       <ion-list>
@@ -88,6 +88,11 @@ ion-item a{
 
 ion-item a:hover{
   border-left: 2px solid yellow;
+}
+
+.cta-nav{
+  border-radius: 0!important;
+  width: 49%;
 }
 
 </style>

@@ -87,6 +87,7 @@ http://ionicframework.com/docs/theming/ */
   text-align: center;
   background: #e9c203;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .big {

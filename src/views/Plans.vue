@@ -7,8 +7,8 @@
       </div>
       <div class="container swiper-container ">
         <swiper
-            :slides-per-view="1.3"
-            :space-between="30"
+            :slides-per-view="1.1"
+            :space-between="10"
             @swiper="onSwiper"
             @slideChange="onSlideChange"
         >
@@ -30,7 +30,8 @@
               <ion-card-title>Formule Europe</ion-card-title>
               <ion-card-subtitle>13,99€/mois</ion-card-subtitle>
             </ion-card-header>
-          </ion-card></swiper-slide>
+          </ion-card>
+          </swiper-slide>
           <swiper-slide>
             <ion-card>
               <div class="card-image" style="background-image:url('/plans/afrique.jpg') "></div>

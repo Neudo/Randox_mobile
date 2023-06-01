@@ -10,6 +10,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@fawmi/vue-google-maps": "^0.9.79",
     "@ionic/vue": "^7.0.0",
     "@ionic/vue-router": "^7.0.0",
     "ionicons": "^7.0.0",

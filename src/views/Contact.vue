@@ -20,6 +20,30 @@
         <ion-button>Envoyer</ion-button>
       </form>
 
+      <ion-item>
+        <ion-label>
+          19 rue Yves Toudic 75010 Paris <br> 0660170284 - contact@randox.com
+        </ion-label>
+      </ion-item>
+
+      <GMapMap
+          :center="center"
+          :zoom="9"
+          map-type-id="terrain"
+          style="width: 100%; height: 300px"
+      >
+        <GMapCluster>
+          <GMapMarker
+              :key="index"
+              v-for="(m, index) in markers"
+              :position="m.position"
+              :clickable="true"
+              :draggable="true"
+              @click="center=m.position"
+          />
+        </GMapCluster>
+      </GMapMap>
+
     </ion-content>
 
   </ion-page>
@@ -42,7 +66,19 @@ export default defineComponent({
     IonTitle,
     IonToolbar,
   },
-});
+  data() {
+    return {
+      center: {lat: 48.870622063039406, lng: 2.363051410981994},
+      markers: [
+        {
+          position: {
+            lat: 48.870622063039406, lng: 2.363051410981994
+          },
+        }
+      ]
+    }
+  }
+})
 </script>
 
 <style>

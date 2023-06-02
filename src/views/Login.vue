@@ -5,20 +5,16 @@
         <h1>Connexion</h1>
       </div>
 
-      <form action="">
+      <form @submit.prevent="login" action="">
         <ion-item>
           <ion-label position="floating">Email</ion-label>
-          <ion-input placeholder="Votre email"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Nom</ion-label>
-          <ion-input placeholder="Votre nom"></ion-input>
+          <ion-input v-model="email" placeholder="Votre email"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Mot de passe</ion-label>
-          <ion-input type="password"></ion-input>
+          <ion-input v-model="password" type="password"></ion-input>
         </ion-item>
-        <ion-button>Envoyer</ion-button>
+        <ion-button type="submit">Envoyer</ion-button>
       </form>
 
     </ion-content>
@@ -26,9 +22,12 @@
 </template>
 
 <script lang="ts">
-import { IonButtons, IonContent, IonHeader, IonMenu, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { IonItem, IonButtons, IonContent, IonHeader, IonMenu, IonMenuButton, IonPage, IonTitle, IonToolbar, IonInput, IonLabel } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import Menu from "../App.vue";
+import {mapActions} from "pinia";
+import {useAuthStore} from "../stores/auth.js";
+
 
 export default defineComponent({
   components: {
@@ -41,7 +40,29 @@ export default defineComponent({
     IonPage,
     IonTitle,
     IonToolbar,
+    IonInput,
+    IonLabel,
+    IonItem
   },
+  data(){
+    return{
+      email: '',
+      password:''
+    }
+  },
+  methods:{
+    ...mapActions(useAuthStore, { signUp: 'login'}),
+    async login() {
+      console.log(this.email)
+      console.log(this.password)
+      try {
+        await this.signUp(this.email, this.password)
+        this.$router.push('/');
+      } catch(error) {
+        console.log(error)
+      }
+    }
+  }
 });
 </script>
 

@@ -13,101 +13,38 @@
         <p style="margin-bottom: 50px">
           Chez nous, l'aventure culinaire commence dès que vous ouvrez votre boîte. Laissez-vous surprendre, émerveiller et inspirer par la richesse gastronomique du monde entier. En plus de la nourriture, vous recevrez également des informations sur les origines des plats, des astuces de dégustation et des recettes exclusives pour mettre en valeur chaque ingrédient.
         </p>
-
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>Formule MONDE</ion-card-title>
-            <ion-card-subtitle>24,99€/mois</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content>
-            Pour découvrir des recettes du monde entier.
-          </ion-card-content>
-        </ion-card>
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>Formule Europe</ion-card-title>
-            <ion-card-subtitle>13,99€/mois</ion-card-subtitle>
-          </ion-card-header>
-        </ion-card>
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>Formule Afrique</ion-card-title>
-            <ion-card-subtitle>13,99€/mois</ion-card-subtitle>
-          </ion-card-header>
-        </ion-card>
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>Formule Asie</ion-card-title>
-            <ion-card-subtitle>17,99€/mois</ion-card-subtitle>
-          </ion-card-header>
-        </ion-card>
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>Formule Amérique du nord</ion-card-title>
-            <ion-card-subtitle>13,99€/mois</ion-card-subtitle>
-          </ion-card-header>
-        </ion-card>
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>Formule Amérique du sud</ion-card-title>
-            <ion-card-subtitle>13,99€/mois</ion-card-subtitle>
-          </ion-card-header>
-        </ion-card>
         <router-link class="cta big" to="/abonnements">Voir tous nos abonnements</router-link>
 
-
-
       </div>
-      <div class="container">
         <h1>Nos actualités</h1>
-        <ion-card>
-          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-          <ion-card-header>
-            <ion-card-title>Actu numéro 1</ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content>
-            Here's a small text description for the card content. Nothing more, nothing less.
-          </ion-card-content>
+        <ion-card style="background-image: url('/public/cuisine_asiatique.webp')" class="post">
+          <router-link to="/">Titre article numéro 1 voici le titre</router-link>
         </ion-card>
-        <ion-card>
-          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-          <ion-card-header>
-            <ion-card-title>Actu numéro 1</ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content>
-            Here's a small text description for the card content. Nothing more, nothing less.
-          </ion-card-content>
+        <ion-card style="background-image: url('/public/cuisine_asiatique.webp')" class="post">
+          <router-link to="/">Titre article numéro 2 voici le titre</router-link>
         </ion-card>
-        <ion-card>
-          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-          <ion-card-header>
-            <ion-card-title>Actu numéro 1</ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content>
-            Here's a small text description for the card content. Nothing more, nothing less.
-          </ion-card-content>
+        <ion-card style="background-image: url('/public/cuisine_asiatique.webp')" class="post">
+          <router-link to="/">Titre article numéro 3 voici le titre</router-link>
         </ion-card>
-
+      <div class="container">
         <router-link class="cta big" to="/articles">Voir toutes les actualités</router-link>
-
       </div>
-
-
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import { IonButtons, IonContent, IonHeader, IonMenu, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { IonButton, IonButtons, IonLabel, IonCard, IonContent, IonHeader, IonMenu, IonMenuButton, IonPage, IonTitle, IonToolbar, IonCardContent, IonCardTitle, IonCardSubtitle, IonItem, IonCardHeader } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import Menu from "../App.vue";
+import {mapState} from "pinia";
+import {useAuthStore} from "../stores/auth.js";
+
 
 export default defineComponent({
   components: {
     Menu,
+    IonButton, IonLabel, IonCard,
     IonButtons,
     IonContent,
     IonHeader,
@@ -116,13 +53,84 @@ export default defineComponent({
     IonPage,
     IonTitle,
     IonToolbar,
+    IonCardContent, IonCardTitle, IonCardSubtitle, IonItem, IonCardHeader
   },
+  computed: {
+    ...mapState(useAuthStore, ['loggedIn', 'user'])
+  },
+  data(){
+    return{
+
+    }
+  },
+  mounted() {
+    this.fetchPosts()
+  },
+  methods:{
+    async fetchPosts(){
+      const url = "http://localhost:3005/post/";
+      const store = useAuthStore()
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${store.user.token}`
+        },
+      })
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+      } else {
+        console.error('Erreur lors de l\'affichage des articles');
+      }
+    }
+  }
 });
 </script>
 
 <style>
 h1 {
-  padding-top: 50px;
+  padding: 50px 15px 0;
+
+}
+
+.post{
+  position: relative;
+}
+
+.post a:after {
+  position: absolute;
+  content: '';
+  inset: 0;
+}
+
+.post a{
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  color: white;
+  font-size: 2.4rem;
+  padding: 20px 5px;
+}
+.post:before{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,.6) 50%, rgba(0,0,0.9) 100%);
+}
+.post:not(.first-post){
+  border-radius: 20px;
+  min-height: 20vh;
+  background-size: cover;
+  margin-bottom: 20px;
+
+}
+
+.post:not(.first-post) a{
+  font-size: 1.2rem;
 }
 
 </style>

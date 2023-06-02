@@ -3,6 +3,7 @@
     <ion-content class="ion-no-padding space-header">
       <div class="container bg-blue">
         <h1>Mon compte</h1>
+        <a @click="logout" href="/">Déconnexion</a>
       </div>
       <h2>Mes informations</h2>
       <div class="container" style="z-index: 0">
@@ -15,11 +16,11 @@
           </div>
           <div class="wrapper-item">
             <ion-label>Nom</ion-label>
-            <ion-input type="text" placeholder="Admin" ></ion-input>
+            <ion-input placeholder="Admin" ></ion-input>
           </div>
           <div class="wrapper-item">
             <ion-label>Mot de passe</ion-label>
-            <ion-input type="password" ></ion-input>
+            <ion-input type="password" placeholder="*******" ></ion-input>
           </div>
           <div class="cta">Modifier</div>
         </div>
@@ -47,6 +48,9 @@
 import { IonButtons, IonContent, IonHeader, IonMenu, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import Menu from "../App.vue";
+import {mapActions} from "pinia";
+import {useAuthStore} from "../stores/auth.js";
+
 
 export default defineComponent({
   components: {
@@ -69,8 +73,16 @@ export default defineComponent({
     showEditArea(){
       this.isOpen = true
       console.log(this.isOpen)
+    },
+    ...mapActions(useAuthStore, { singOut: 'logout' }),
+          async userLogout() {
+        try {
+          await this.singOut();
+        } catch (error) {
+          console.error(error);
+        }
+      },
     }
-  }
 });
 </script>
 

@@ -7,12 +7,18 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <div class="wrapper-cta">
+      <div class="wrapper-cta" v-if="!loggedIn">
         <router-link class="cta cta-nav" to="/inscription">Inscription</router-link>
         <router-link class="cta cta-nav" to="/connexion">Connexion</router-link>
       </div>
+      <div class="wrapper-cta" v-else>
+        <router-link class="cta cta-nav" to="/mon-compte">Mon compte</router-link>
+        <router-link class="cta cta-nav" to="/panier">Panier</router-link>
+      </div>
+
 
       <ion-list>
+
         <ion-item>
           <ion-label>
             <router-link to="/articles">Liste des articles</router-link>
@@ -20,22 +26,13 @@
         </ion-item>
         <ion-item>
           <ion-label>
-            <router-link to="/mon-compte">Mon compte</router-link>
-          </ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>
             <router-link to="/abonnements">Nos abonnements</router-link>
           </ion-label>
         </ion-item>
+
         <ion-item>
           <ion-label>
-            <router-link to="/panier">Panier</router-link>
-          </ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>
-            <router-link to="/contactez-nous">Contact</router-link>
+            <router-link to="/contact">Contact</router-link>
           </ion-label>
         </ion-item>
 
@@ -45,18 +42,19 @@
   </ion-menu>
 </template>
 <script lang="js">
-import { IonHeader, IonToolbar, IonTitle } from '@ionic/vue';
+import { IonHeader, IonToolbar, IonTitle,IonLabel,IonItem,IonList,IonContent,IonMenu } from '@ionic/vue';
+import {mapState} from "pinia";
+import {useAuthStore} from "@/stores/auth.js";
 
 
 export default {
   components: {
     IonHeader,
     IonTitle,
-    IonToolbar
+    IonToolbar,IonLabel,IonItem,IonList,IonContent,IonMenu
   },
-  data() {
-    return {
-    };
+  computed: {
+    ...mapState(useAuthStore, ['loggedIn', 'user'])
   },
 };
 </script>

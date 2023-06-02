@@ -47,9 +47,19 @@ const routes = [
     component: () => import("../views/Checkout.vue"),
   },
   {
-    path: "/contactez-nous",
+    path: "/contact",
     name: "Contact",
     component: () => import("../views/Contact.vue"),
+  },
+  {
+    path: "/panier/succes",
+    name: "Succes",
+    component: () => import("../views/Succes.vue"),
+  },
+  {
+    path: "/panier/cancel",
+    name: "Cancel",
+    component: () => import("../views/Cancel.vue"),
   },
 
 ];

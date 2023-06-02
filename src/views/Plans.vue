@@ -5,69 +5,28 @@
         <h1>Un choix international</h1>
         <p>Il y en a forcément pour tous les goûts ! Choisissez vos régions du monde préférés et degustez de nouveaux plats.</p>
       </div>
-      <div class="container swiper-container ">
+      <div class="container swiper-container" >
         <swiper
             :slides-per-view="1.1"
             :space-between="10"
             @swiper="onSwiper"
             @slideChange="onSlideChange"
         >
-
-          <swiper-slide>
+          <swiper-slide v-for="plan in plans" key="plan.id">
             <ion-card>
               <div class="card-image" style="background-image:url('/plans/world.jpg') "></div>
               <ion-card-header>
-                <ion-card-title>Formule MONDE</ion-card-title>
-                <ion-card-subtitle>24,99€/mois</ion-card-subtitle>
+                <ion-card-title>{{plan.title}}</ion-card-title>
+                <ion-card-subtitle>{{plan.price}}€/mois</ion-card-subtitle>
+                <a href="/checkout/" class="cta">S'abonner</a>
+                <form @submit.prevent="openStripe(plan.stripe_id)" action="">
+                  <ion-button type="submit">S'abonner</ion-button>
+<!--                  <input type="hidden" name="priceId" :value="plan.stripe_id" />-->
+                  <input type="hidden" name="lookup_key" :value="plan.stripe_id" />
+                </form>
               </ion-card-header>
             </ion-card>
           </swiper-slide>
-          <swiper-slide>
-            <ion-card>
-              <div class="card-image" style="background-image:url('/plans/europe.jpg') "></div>
-
-              <ion-card-header>
-              <ion-card-title>Formule Europe</ion-card-title>
-              <ion-card-subtitle>13,99€/mois</ion-card-subtitle>
-            </ion-card-header>
-          </ion-card>
-          </swiper-slide>
-          <swiper-slide>
-            <ion-card>
-              <div class="card-image" style="background-image:url('/plans/afrique.jpg') "></div>
-
-              <ion-card-header>
-              <ion-card-title>Formule Afrique</ion-card-title>
-              <ion-card-subtitle>13,99€/mois</ion-card-subtitle>
-            </ion-card-header>
-          </ion-card></swiper-slide>
-          <swiper-slide>
-            <ion-card>
-              <div class="card-image" style="background-image:url('/plans/asie.jpg') "></div>
-
-              <ion-card-header>
-              <ion-card-title>Formule Afrique</ion-card-title>
-              <ion-card-subtitle>13,99€/mois</ion-card-subtitle>
-            </ion-card-header>
-          </ion-card></swiper-slide>
-          <swiper-slide>
-            <ion-card>
-              <div class="card-image" style="background-image:url('/plans/amerique-nord.jpg') "></div>
-
-              <ion-card-header>
-              <ion-card-title>Formule Amérique du nord</ion-card-title>
-              <ion-card-subtitle>13,99€/mois</ion-card-subtitle>
-            </ion-card-header>
-          </ion-card>
-          </swiper-slide>
-          <swiper-slide>
-            <ion-card>
-              <div class="card-image" style="background-image:url('/plans/amerique-sud.jpg') "></div>
-              <ion-card-header>
-              <ion-card-title>Formule Amérique du sud</ion-card-title>
-              <ion-card-subtitle>13,99€/mois</ion-card-subtitle>
-            </ion-card-header>
-          </ion-card></swiper-slide>
         </swiper>
 
 
@@ -78,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { IonButtons, IonContent, IonHeader, IonMenu, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { IonInput,IonButtons, IonContent, IonHeader, IonMenu, IonMenuButton, IonPage, IonTitle, IonToolbar,IonCardTitle,IonCardSubtitle, IonCard, IonCardHeader } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import Menu from "../App.vue";
 import { Swiper, SwiperSlide } from 'swiper/vue';
@@ -92,6 +51,7 @@ export default defineComponent({
     Swiper,
     SwiperSlide,
     Menu,
+    IonInput,
     IonButtons,
     IonContent,
     IonHeader,
@@ -100,19 +60,59 @@ export default defineComponent({
     IonPage,
     IonTitle,
     IonToolbar,
+    IonCardTitle,IonCardSubtitle, IonCard, IonCardHeader
   },
   setup() {
     const onSwiper = (swiper) => {
-      console.log(swiper);
     };
     const onSlideChange = () => {
-      console.log('slide change');
     };
     return {
       onSwiper,
       onSlideChange,
     };
   },
+  data(){
+    return{
+      plans: [],
+      stripe: ""
+    }
+  },
+  mounted() {
+    this.fetchPlans()
+  },
+  methods:{
+    async fetchPlans(){
+      const url = "http://localhost:3005/plan/";
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      this.plans = []
+      if (response.ok) {
+        const data = await response.json();
+        this.plans = data.allPlans
+      } else {
+        console.error('Erreur lors de l\'affichage des abonnements');
+      }
+    },
+    async openStripe(s_id){
+      console.log(s_id)
+      const url = "http://localhost:3005/checkout/"
+      const response = await fetch(url,{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ stripe_id: s_id })
+      })
+      if (response.ok){
+
+      }
+    }
+  }
 });
 </script>
 

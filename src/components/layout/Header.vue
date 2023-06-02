@@ -10,14 +10,15 @@
   </ion-header>
 </template>
 <script lang="js">
-import { IonHeader, IonToolbar, IonTitle } from '@ionic/vue';
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonMenuButton } from '@ionic/vue';
 
 
 export default {
   components: {
     IonHeader,
     IonTitle,
-    IonToolbar
+    IonToolbar,IonButtons, IonMenuButton
+
   },
   data() {
     return {

@@ -10,19 +10,21 @@
         <div @click="showEditArea" class="cta">Modifier mes infos</div>
         <div class="container-edit-infos" :class="{open: isOpen}" >
 
-          <div class="wrapper-item">
-            <ion-label>Adresse e-mail</ion-label>
-            <ion-input type="email" placeholder="admin@admin.fr"></ion-input>
-          </div>
-          <div class="wrapper-item">
-            <ion-label>Nom</ion-label>
-            <ion-input placeholder="Admin" ></ion-input>
-          </div>
-          <div class="wrapper-item">
-            <ion-label>Mot de passe</ion-label>
-            <ion-input type="password" placeholder="*******" ></ion-input>
-          </div>
-          <div class="cta">Modifier</div>
+          <form action="" @submit="editUser">
+            <div class="wrapper-item">
+              <ion-label>Adresse e-mail</ion-label>
+              <ion-input type="email" placeholder="admin@admin.fr"></ion-input>
+            </div>
+            <div class="wrapper-item">
+              <ion-label>Nom</ion-label>
+              <ion-input type="text" placeholder="Admin"></ion-input>
+            </div>
+            <div class="wrapper-item">
+              <ion-label>Mot de passe</ion-label>
+              <ion-input type="password" placeholder="*******"></ion-input>
+            </div>
+            <div class="cta">Modifier</div>
+          </form>
         </div>
       </div>
 
@@ -38,14 +40,13 @@
             </ion-card-subtitle>
           </ion-card-header>
         </ion-card>
-        <div class="cta">Voir les autres abonnements</div>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import { IonButtons, IonContent, IonHeader, IonMenu, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { IonButtons,IonButton,IonCardSubtitle,IonCardHeader, IonContent, IonHeader, IonMenu, IonMenuButton, IonPage, IonTitle, IonToolbar, IonLabel, IonInput, IonCardTitle, IonCard } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import Menu from "../App.vue";
 import {mapActions} from "pinia";
@@ -55,7 +56,7 @@ import {useAuthStore} from "../stores/auth.js";
 export default defineComponent({
   components: {
     Menu,
-    IonButtons,
+    IonButtons,IonLabel, IonInput, IonCardTitle, IonCard,IonButton,IonCardSubtitle,IonCardHeader,
     IonContent,
     IonHeader,
     IonMenu,
@@ -66,23 +67,47 @@ export default defineComponent({
   },
   data(){
     return{
-      isOpen: false
+      isOpen: false,
+      userInfos: []
     }
   },
   methods:{
     showEditArea(){
       this.isOpen = true
-      console.log(this.isOpen)
+    },
+    mounted(){
+      this.me()
     },
     ...mapActions(useAuthStore, { singOut: 'logout' }),
-          async userLogout() {
-        try {
-          await this.singOut();
-        } catch (error) {
-          console.error(error);
-        }
-      },
+    async userLogout() {
+      try {
+        await this.singOut();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async editUser(){
+
+    },
+    async me(){
+      console.log('meok')
+      const url = "http://localhost:3005/auth/me"
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      this.userInfos = []
+      if (response.ok) {
+        const data = await response.json()
+        console.log(data)
+        this.userInfos = data
+      } else {
+        console.error('Erreur lors de l\'affichage des  notes')
+      }
     }
+  }
 });
 </script>
 

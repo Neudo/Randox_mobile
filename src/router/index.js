@@ -32,6 +32,11 @@ const routes = [
     component: () => import("../views/Account.vue"),
   },
   {
+    path: "/mon-compte/mot-de-passe-oublie",
+    name: "Password",
+    component: () => import("../views/Password.vue"),
+  },
+  {
     path: "/articles/:id",
     name: "Post",
     component: () => import("../views/Post.vue"),

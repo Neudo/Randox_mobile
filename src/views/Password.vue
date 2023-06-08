@@ -5,9 +5,7 @@
         <h1>Connexion</h1>
       </div>
 
-      <Error :error="error" :errors="errors" />
-
-      <form @submit.prevent="login" action="">
+      <form @submit.prevent="resetPassword" action="">
         <ion-item>
           <ion-label position="floating">Email</ion-label>
           <ion-input v-model="email" placeholder="Votre email"></ion-input>
@@ -30,16 +28,9 @@ import { defineComponent } from 'vue';
 import Menu from "../App.vue";
 import {mapActions} from "pinia";
 import {useAuthStore} from "../stores/auth.js";
-import {useVuelidate} from "@vuelidate/core";
-import Error from '../components/Error.vue'
-import {email, minLength, required} from "@vuelidate/validators";
 
 
 export default defineComponent({
-  name: "Login",
-  setup() {
-    return { v$: useVuelidate() }
-  },
   components: {
     Menu,
     IonButtons,
@@ -52,45 +43,24 @@ export default defineComponent({
     IonToolbar,
     IonInput,
     IonLabel,
-    IonItem,
-    Error
-  },
-  validations () {
-    return {
-      form: {
-        email: {required, email},
-        password: {required},
-      }
-    }
+    IonItem
   },
   data(){
     return{
-     form: {},
-      error: false,
-      errors: []
+      email: '',
+      password:''
     }
   },
   methods:{
-    ...mapActions(useAuthStore, { signIn: 'login'}),
-    async login() {
-      this.v$.$touch()
-
-      // this.error = this.v$.error
-      // this.errors = this.v$.errors
-      // if(this.v$.$error){
-      //   console.log('errors ok')
-      //   return
-      // }
+    ...mapActions(useAuthStore, { signUp: 'resetPassword'}),
+    async resetPassword() {
+      console.log(this.email)
+      console.log(this.password)
       try {
-        await this.signIn(this.form.email, this.form.password)
+        await this.signUp(this.email, this.password)
         this.$router.push('/');
       } catch(error) {
         console.log(error)
-        this.error = true
-        this.errors.push({
-          $property: error.name,
-          $message: error.message
-        })
       }
     }
   }

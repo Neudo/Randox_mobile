@@ -9,23 +9,18 @@
       <img src="/public/cuisine_asiatique.webp" alt="">
 
       <div class="container">
-<h2 id="offers">Des formules adaptées à vos envies ...</h2>
+        <h2 id="offers">Des formules adaptées à vos envies ...</h2>
         <p style="margin-bottom: 50px">
           Chez nous, l'aventure culinaire commence dès que vous ouvrez votre boîte. Laissez-vous surprendre, émerveiller et inspirer par la richesse gastronomique du monde entier. En plus de la nourriture, vous recevrez également des informations sur les origines des plats, des astuces de dégustation et des recettes exclusives pour mettre en valeur chaque ingrédient.
         </p>
         <router-link class="cta big" to="/abonnements">Voir tous nos abonnements</router-link>
 
       </div>
-        <h1>Nos actualités</h1>
-        <ion-card style="background-image: url('/public/cuisine_asiatique.webp')" class="post">
-          <router-link to="/">Titre article numéro 1 voici le titre</router-link>
-        </ion-card>
-        <ion-card style="background-image: url('/public/cuisine_asiatique.webp')" class="post">
-          <router-link to="/">Titre article numéro 2 voici le titre</router-link>
-        </ion-card>
-        <ion-card style="background-image: url('/public/cuisine_asiatique.webp')" class="post">
-          <router-link to="/">Titre article numéro 3 voici le titre</router-link>
-        </ion-card>
+      <h1>Nos actualités</h1>
+      <ion-card v-for="post in latestPost" key="post.id" style="background-image: url('/public/cuisine_asiatique.webp')" class="post">
+        <router-link to="/">{{post.title}}</router-link>
+      </ion-card>
+
       <div class="container">
         <router-link class="cta big" to="/articles">Voir toutes les actualités</router-link>
       </div>
@@ -60,7 +55,7 @@ export default defineComponent({
   },
   data(){
     return{
-
+      latestPost: []
     }
   },
   mounted() {
@@ -79,7 +74,9 @@ export default defineComponent({
       })
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+        for (let i = 0; i < 3 ; i++) {
+          this.latestPost.push(data.allPosts[i])
+        }
       } else {
         console.error('Erreur lors de l\'affichage des articles');
       }

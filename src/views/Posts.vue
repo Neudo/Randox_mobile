@@ -1,24 +1,14 @@
 <template>
   <ion-page id=" main-content">
     <ion-content class="ion-no-padding">
-      <ion-card style="background-image: url('/public/cuisine_asiatique.webp')" class="post first-post">
-        <router-link to="/posts/1">Titre article numéro 1 voici le titre</router-link>
-      </ion-card>
-        <ion-card style="background-image: url('/public/cuisine_asiatique.webp')" class="post">
-          <router-link to="/">Titre article numéro 2 voici le titre</router-link>
-        </ion-card>
-      <ion-card style="background-image: url('/public/cuisine_asiatique.webp')" class="post">
-        <router-link to="/">Titre article numéro 2 voici le titre</router-link>
-      </ion-card>
-      <ion-card style="background-image: url('/public/cuisine_asiatique.webp')" class="post">
-        <router-link to="/">Titre article numéro 2 voici le titre</router-link>
+      <ion-card v-for="(post, index) in posts" key="post.id" style="background-image: url('/public/cuisine_asiatique.webp')" :class="{'first-post' : index === 0}" class="post">
+        <router-link to="/posts/1">{{post.title}}</router-link>
       </ion-card>
     </ion-content>
   </ion-page>
 </template>
-
 <script lang="ts">
-import { IonButtons, IonContent, IonHeader, IonMenu, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { IonButtons, IonContent, IonHeader, IonMenu, IonMenuButton, IonPage, IonTitle, IonToolbar, IonCard } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import Menu from "../App.vue";
 
@@ -33,7 +23,36 @@ export default defineComponent({
     IonPage,
     IonTitle,
     IonToolbar,
+    IonCard
   },
+  data(){
+    return{
+      posts:[]
+    }
+  },
+  mounted() {
+    this.fetchPosts()
+  },
+  methods:{
+    async fetchPosts(){
+      const url = "http://localhost:3005/post/";
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      if (response.ok) {
+        const data = await response.json();
+        this.posts = data.allPosts
+        this.posts = this.posts.filter((post) => post.publied);
+
+      } else {
+        console.error('Erreur lors de l\'affichage des articles');
+      }
+    }
+
+  }
 });
 </script>
 <style>

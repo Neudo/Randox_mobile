@@ -14,7 +14,10 @@ import Menu from "@/components/layout/Menu.vue";
 import Footer from "@/components/layout/Footer.vue";
 
 export default {
-  components: {Footer, Menu, Header, IonApp, IonRouterOutlet }
+  components: {Footer, Menu, Header, IonApp, IonRouterOutlet },
+  async mounted() {
+    const token = localStorage.getItem('token')
+  }
 }
 </script>
 <style>

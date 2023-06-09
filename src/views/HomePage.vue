@@ -17,8 +17,8 @@
 
       </div>
       <h1>Nos actualités</h1>
-      <ion-card v-for="post in latestPost" key="post.id" style="background-image: url('/public/cuisine_asiatique.webp')" class="post">
-        <router-link to="/">{{post.title}}</router-link>
+      <ion-card v-for="post in latestPost" key="post.id" :style="{ backgroundImage: 'url(' + post.image + ')' }" class="post">
+        <router-link :to="`/posts/${post.slug}`">{{post.title}}</router-link>
       </ion-card>
 
       <div class="container">
@@ -48,7 +48,11 @@ export default defineComponent({
     IonPage,
     IonTitle,
     IonToolbar,
-    IonCardContent, IonCardTitle, IonCardSubtitle, IonItem, IonCardHeader
+    IonCardContent,
+    IonCardTitle,
+    IonCardSubtitle,
+    IonItem,
+    IonCardHeader
   },
   computed: {
     ...mapState(useAuthStore, ['loggedIn', 'user'])
@@ -75,7 +79,9 @@ export default defineComponent({
       if (response.ok) {
         const data = await response.json();
         for (let i = 0; i < 3 ; i++) {
-          this.latestPost.push(data.allPosts[i])
+          if (data[i]){
+          this.latestPost.push(data[i])
+          }
         }
       } else {
         console.error('Erreur lors de l\'affichage des articles');

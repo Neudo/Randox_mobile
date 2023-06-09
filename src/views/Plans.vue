@@ -14,7 +14,7 @@
         >
           <swiper-slide v-for="plan in plans" key="plan.id">
             <ion-card>
-              <div class="card-image" style="background-image:url('/plans/world.jpg') "></div>
+              <div class="card-image" :style="{ backgroundImage: 'url(' + plan.image + ')' } "></div>
               <ion-card-header>
                 <ion-card-title>{{plan.title}}</ion-card-title>
                 <ion-card-subtitle>{{plan.price}}€/mois</ion-card-subtitle>
@@ -26,6 +26,7 @@
               </ion-card-header>
             </ion-card>
           </swiper-slide>
+
         </swiper>
 
 
@@ -92,7 +93,7 @@ export default defineComponent({
       this.plans = []
       if (response.ok) {
         const data = await response.json();
-        this.plans = data.allPlans
+        this.plans = data
       } else {
         console.error('Erreur lors de l\'affichage des abonnements');
       }
@@ -129,7 +130,7 @@ h1 {
 }
 
 .card-image{
-  height: 400px;
+  height: 550px;
   background-size: cover;
   background-repeat: no-repeat;
 }

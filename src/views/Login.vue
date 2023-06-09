@@ -57,10 +57,12 @@ export default defineComponent({
   },
   validations () {
     return {
-      form: {
-        email: {required, email},
-        password: {required},
-      }
+      // form: {
+      //   email: {required, email},
+      //   password: {required},
+      // }
+      email:'',
+      password:''
     }
   },
   data(){
@@ -73,7 +75,7 @@ export default defineComponent({
   methods:{
     ...mapActions(useAuthStore, { signIn: 'login'}),
     async login() {
-      this.v$.$touch()
+      // this.v$.$touch()
 
       // this.error = this.v$.error
       // this.errors = this.v$.errors
@@ -82,7 +84,7 @@ export default defineComponent({
       //   return
       // }
       try {
-        await this.signIn(this.form.email, this.form.password)
+        await this.signIn(this.email, this.password)
         this.$router.push('/');
       } catch(error) {
         console.log(error)

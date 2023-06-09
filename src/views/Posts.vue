@@ -1,8 +1,8 @@
 <template>
   <ion-page id=" main-content">
     <ion-content class="ion-no-padding">
-      <ion-card v-for="(post, index) in posts" key="post.id" style="background-image: url('/public/cuisine_asiatique.webp')" :class="{'first-post' : index === 0}" class="post">
-        <router-link to="/posts/1">{{post.title}}</router-link>
+      <ion-card v-for="(post, index) in posts" key="post.id" :style="{ backgroundImage: 'url(' + post.image + ')' }" :class="{'first-post' : index === 0}" class="post">
+        <router-link :to="`/posts/${post.slug}`">{{ post.title }}</router-link>
       </ion-card>
     </ion-content>
   </ion-page>
@@ -44,7 +44,8 @@ export default defineComponent({
       })
       if (response.ok) {
         const data = await response.json();
-        this.posts = data.allPosts
+        this.posts = data
+        console.log(data)
         this.posts = this.posts.filter((post) => post.publied);
 
       } else {

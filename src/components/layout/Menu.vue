@@ -84,8 +84,9 @@ ion-list{
   margin-top: 50px;
 }
 
-ion-item {
+ion-list ion-item {
   color: white;
+  cursor: pointer;
   text-decoration: none;
   padding: 0 15px;
   border-left: 2px solid transparent;

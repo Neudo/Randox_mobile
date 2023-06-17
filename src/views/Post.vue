@@ -1,7 +1,24 @@
 <template>
   <ion-page id=" main-content">
     <ion-content class="ion-no-padding">
-     <h1>SINGLE POST</h1>
+
+      <div v-if="post.length >= 1" class="single-post">
+      <h1>{{ post[0].title }}</h1>
+      <span>{{post[0].author}} {{post[0].created_at}}</span>
+
+      <div class="cover-img" style="height: 300px; width: 100%;" :style="{ backgroundImage: 'url(' + post[0].image + ')' }"></div>
+      <div class="content">{{post[0].content}}</div>
+      </div>
+        <div v-else>
+          <h2>Problème lors de l'affichage du post</h2>
+          <h2>Problème lors de l'affichage du post</h2>
+          <h2>Problème lors de l'affichage du post</h2>
+          <h2>Problème lors de l'affichage du post</h2>
+          <h2>Problème lors de l'affichage du post</h2>
+          <h2>Problème lors de l'affichage du post</h2>
+          <h2>Problème lors de l'affichage du post</h2>
+        </div>
+
     </ion-content>
   </ion-page>
 </template>
@@ -23,53 +40,49 @@ export default defineComponent({
     IonTitle,
     IonToolbar,
   },
+  mounted() {
+    this.fetchSinglePost()
+  },
+  data() {
+    return{
+      post: {}
+    }
+  },
+  methods:{
+    async fetchSinglePost(){
+      const slug = this.$route.params.slug ;
+      const url = `http://localhost:3005/post/${slug}`;
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      if (response.ok) {
+        const data = await response.json();
+        this.post = data
+        console.log("post =====", this.post)
+        console.log(this.post.length)
+      } else {
+        console.error('Erreur lors de l\'affichage des articles');
+      }
+    }
+  }
 });
 </script>
 <style>
-.first-post{
-  min-height: 50vh;
-  margin: 0;
+h1{
+  background-color: whitesmoke;
+  padding: 50px;
+}
+
+.cover-img{
   background-size: cover;
-  border-radius: unset;
-}
-
-.post{
-  position: relative;
-}
-
-.post a:after {
-  position: absolute;
-  content: '';
-  inset: 0;
-}
-
-.post a{
-  position: absolute;
-  bottom: 0;
-  left: 20px;
-  color: white;
-  font-size: 2.4rem;
-  padding: 20px 5px;
-}
-.post:before{
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 50%;
-  background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,.6) 50%, rgba(0,0,0.9) 100%);
-}
-.post:not(.first-post){
-  border-radius: 20px;
-  min-height: 20vh;
-  background-size: cover;
-  margin-bottom: 20px;
 
 }
 
-.post:not(.first-post) a{
-  font-size: 1.2rem;
+.content{
+  margin-top: 40px;
+  padding: 20px 20px 60px;
 }
-
 </style>

@@ -37,7 +37,7 @@ const routes = [
     component: () => import("../views/Password.vue"),
   },
   {
-    path: "/articles/:id",
+    path: "/article/:slug",
     name: "Post",
     component: () => import("../views/Post.vue"),
   },

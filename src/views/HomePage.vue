@@ -18,7 +18,7 @@
       </div>
       <h1>Nos actualités</h1>
       <ion-card v-for="post in latestPost" key="post.id" :style="{ backgroundImage: 'url(' + post.image + ')' }" class="post">
-        <router-link :to="`/posts/${post.slug}`">{{post.title}}</router-link>
+        <router-link :to="`/article/${post.slug}`">{{post.title}}</router-link>
       </ion-card>
 
       <div class="container">

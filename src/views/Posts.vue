@@ -2,7 +2,7 @@
   <ion-page id=" main-content">
     <ion-content class="ion-no-padding">
       <ion-card v-for="(post, index) in posts" key="post.id" :style="{ backgroundImage: 'url(' + post.image + ')' }" :class="{'first-post' : index === 0}" class="post">
-        <router-link :to="`/posts/${post.slug}`">{{ post.title }}</router-link>
+        <router-link :to="`/article/${post.slug}`">{{ post.title }}</router-link>
       </ion-card>
     </ion-content>
   </ion-page>

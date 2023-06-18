@@ -9,11 +9,11 @@
       <form @submit.prevent="register" action="">
         <ion-item>
           <ion-label position="floating">Email</ion-label>
-          <ion-input v-model="email" placeholder="Votre email"></ion-input>
+          <ion-input v-model="email" type="email" placeholder="Votre email"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Nom</ion-label>
-          <ion-input v-model="name" placeholder="Votre nom"></ion-input>
+          <ion-input v-model="name" type="text" placeholder="Votre nom"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Mot de passe</ion-label>
@@ -32,6 +32,9 @@ import { defineComponent } from 'vue';
 import Menu from "../App.vue";
 import {mapActions} from "pinia";
 import {useAuthStore} from "../stores/auth.js";
+import useValidate from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+
 
 export default defineComponent({
   components: {
@@ -47,6 +50,7 @@ export default defineComponent({
   },
   data(){
     return{
+      v$: useValidate(),
       email: '',
       name: '',
       password:''
@@ -55,12 +59,25 @@ export default defineComponent({
   methods:{
     ...mapActions(useAuthStore, { signUp: 'register'}),
     async register() {
-      try {
-        await this.signUp(this.name, this.email, this.password)
-        this.$router.push('/');
-      } catch(error) {
-        console.log(error)
+      this.v$.$validate()
+      if (!this.v$.$error) {
+        try {
+          await this.signUp(this.name, this.email, this.password)
+          this.$router.push('/');
+        } catch(error) {
+          console.log(error)
+        }
+      } else {
+        alert('Form failed validation')
       }
+
+    }
+  },
+  validations(){
+    return {
+      email: {required},
+      name: {required},
+      password:{required}
     }
   }
 });

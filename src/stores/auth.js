@@ -9,17 +9,20 @@ export const useAuthStore = defineStore("auth", {
     actions: {
         async register(name, email, password) {
             try {
-                const response = await axios.post("http://localhost:3005/auth/signup", {
-                    email: email,
-                    password: password,
-                    name: name,
-                });
+                const response = await axios.post("http://localhost:3005/auth/signup",
+                    JSON.stringify({
+                        email: email,
+                        password: password,
+                        name: name,
+                    }),
+                );
                 const user = response.data;
                 this.loggedIn = true;
 
                 this.user = user;
                 localStorage.setItem("token", user.token);
             } catch (error) {
+                console.log(error)
                 throw error;
             }
         },

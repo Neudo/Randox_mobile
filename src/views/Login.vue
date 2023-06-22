@@ -7,15 +7,14 @@
 
       <Error :error="error" :errors="errors" />
 
-      <form @submit.prevent="login" action="">
+      <form @submit.prevent="login" autocomplete="off" action="">
         <ion-item>
           <ion-label position="floating">Email</ion-label>
-          <ion-input v-model="email" placeholder="Votre email"></ion-input>
+          <ion-input  v-model="email" placeholder="Votre email"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Mot de passe</ion-label>
           <ion-input v-model="password" type="password"></ion-input>
-          <span>Mot de passe oublié ?</span>
         </ion-item>
         <ion-button type="submit">Envoyer</ion-button>
       </form>

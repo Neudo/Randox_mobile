@@ -100,7 +100,8 @@ export default defineComponent({
     },
     async openStripe(s_id){
       console.log(s_id)
-      const url = "http://localhost:3005/checkout/"
+      // const url = "http://localhost:3005/checkout/"
+      const url = "https://randox-api.onrender.com/checkout/"
       const response = await fetch(url,{
         method: 'POST',
         headers: {

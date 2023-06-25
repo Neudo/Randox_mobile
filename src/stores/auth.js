@@ -39,7 +39,7 @@ export const useAuthStore = defineStore("auth", {
 
                 this.loggedIn = true;
                 this.user = user;
-                console.log(userLogged)
+                console.log("userLogged")
                 localStorage.setItem("token", user.token);
             } catch (error) {
                 throw error;

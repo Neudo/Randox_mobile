@@ -9,7 +9,7 @@ export const useAuthStore = defineStore("auth", {
     actions: {
         async register(name, email, password) {
             try {
-                const response = await axios.post(`${process.env.VUE_APP_SITE_URL}/signup`,
+                const response = await axios.post("https://randox-api.onrender.com/auth/signup",
                     JSON.stringify({
                         email: email,
                         password: password,
@@ -28,7 +28,7 @@ export const useAuthStore = defineStore("auth", {
         },
         async login(email, password) {
             try {
-                const response = await axios.post("http://localhost:3005/auth/login",
+                const response = await axios.post("https://randox-api.onrender.com/auth/login",
                     JSON.stringify({
                         email: email,
                         password: password,
@@ -51,7 +51,7 @@ export const useAuthStore = defineStore("auth", {
 
             try {
                 await axios.post(
-                    "http://localhost:3005/auth/logout",
+                    "https://randox-api.onrender.com/auth/logout",
                     {},
                     {
                         headers: {

@@ -4,8 +4,6 @@ import router from './router';
 import VueGoogleMaps from '@fawmi/vue-google-maps'
 import { createPinia } from "pinia";
 
-console.log(process.env.VUE_APP_SITE_URL);
-
 
 
 import { IonicVue } from '@ionic/vue';

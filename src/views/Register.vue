@@ -34,10 +34,8 @@ import { defineComponent } from 'vue';
 import Menu from "../App.vue";
 import {mapActions} from "pinia";
 import {useAuthStore} from "../stores/auth.js";
-import useValidate, {useVuelidate} from '@vuelidate/core'
+import  {useVuelidate} from '@vuelidate/core'
 import {email, required} from '@vuelidate/validators'
-import { reactive, computed } from 'vue'
-import error from "../components/Error.vue";
 import Error from "../components/Error.vue";
 
 

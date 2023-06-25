@@ -10,11 +10,11 @@
       <form @submit.prevent="login" autocomplete="off" action="">
         <ion-item>
           <ion-label position="floating">Email</ion-label>
-          <ion-input  v-model="email" placeholder="Votre email"></ion-input>
+          <ion-input  v-model="form.email" placeholder="Votre email"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Mot de passe</ion-label>
-          <ion-input v-model="password" type="password"></ion-input>
+          <ion-input v-model="form.password" type="password"></ion-input>
         </ion-item>
         <ion-button type="submit">Envoyer</ion-button>
       </form>
@@ -56,17 +56,18 @@ export default defineComponent({
   },
   validations () {
     return {
-      // form: {
-      //   email: {required, email},
-      //   password: {required},
-      // }
-      email:'',
-      password:''
+      form: {
+        email: {required, email},
+        password: {required},
+      }
     }
   },
   data(){
     return{
-     form: {},
+     form: {
+       email: '',
+       password: ''
+     },
       error: false,
       errors: []
     }
@@ -74,19 +75,19 @@ export default defineComponent({
   methods:{
     ...mapActions(useAuthStore, { signIn: 'login'}),
     async login() {
-      // this.v$.$touch()
+      this.v$.$touch()
 
-      // this.error = this.v$.error
-      // this.errors = this.v$.errors
-      // if(this.v$.$error){
-      //   console.log('errors ok')
-      //   return
-      // }
+      this.error = this.v$.error
+      this.errors = this.v$.errors
+
+      if(!this.v$.$error){
+        return
+      }
+
       try {
-        await this.signIn(this.email, this.password)
+        await this.signIn(this.form.email, this.form.password)
         this.$router.push('/');
       } catch(error) {
-        console.log(error)
         this.error = true
         this.errors.push({
           $property: error.name,

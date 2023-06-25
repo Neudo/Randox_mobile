@@ -9,7 +9,7 @@ export const useAuthStore = defineStore("auth", {
     actions: {
         async register(name, email, password) {
             try {
-                const response = await axios.post("http://localhost:3005/auth/signup",
+                const response = await axios.post(`${process.env.VUE_APP_SITE_URL}/signup`,
                     JSON.stringify({
                         email: email,
                         password: password,
@@ -28,10 +28,12 @@ export const useAuthStore = defineStore("auth", {
         },
         async login(email, password) {
             try {
-                const response = await axios.post("http://localhost:3005/auth/login", {
-                    email: email,
-                    password: password,
-                });
+                const response = await axios.post("http://localhost:3005/auth/login",
+                    JSON.stringify({
+                        email: email,
+                        password: password,
+                    }),
+                );
 
                 const user = response.data;
 

@@ -91,6 +91,7 @@ export default defineComponent({
       }
 
       try {
+        console.log('okok')
         await this.signUp(this.form.name, this.form.email, this.form.password)
         this.$router.push('/');
       } catch (error) {

@@ -51,7 +51,7 @@ export default defineComponent({
   methods:{
     async fetchSinglePost(){
       const slug = this.$route.params.slug ;
-      const url = `http://localhost:3005/post/${slug}`;
+      const url = `${import.meta.env.VITE_API_URL}/post/${slug}`;
       const response = await fetch(url, {
         method: 'GET',
         headers: {

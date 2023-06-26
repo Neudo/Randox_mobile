@@ -67,7 +67,7 @@ export default defineComponent({
   },
   methods:{
     async fetchPosts(){
-      const url = "http://localhost:3005/post/";
+      const url = `${import.meta.env.VITE_API_URL}/post/`;
       const store = useAuthStore()
       const response = await fetch(url, {
         method: 'GET',

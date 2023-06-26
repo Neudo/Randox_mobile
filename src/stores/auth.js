@@ -27,6 +27,7 @@ export const useAuthStore = defineStore("auth", {
             }
         },
         async login(email, password) {
+            console.log('majok')
             try {
 
                 const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`,
@@ -40,9 +41,9 @@ export const useAuthStore = defineStore("auth", {
 
                 this.loggedIn = true;
                 this.user = user;
-                console.log("userLogged")
                 localStorage.setItem("token", user.token);
             } catch (error) {
+                console.log(error)
                 throw error;
             }
         },

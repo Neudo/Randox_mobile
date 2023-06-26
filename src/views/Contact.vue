@@ -84,7 +84,8 @@ export default defineComponent({
   },
   methods:{
     async sendMail(){
-      const url = `http://localhost:3005/contact`;
+
+      const url = `${import.meta.env.VITE_API_URL}/contact`;
       const response = await fetch(url, {
         method: 'POST',
         headers: {

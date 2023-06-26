@@ -8,14 +8,13 @@ export const useAuthStore = defineStore("auth", {
     }),
     actions: {
         async register(name, email, password) {
-            console.log('register dans auth')
             try {
-                const response = await axios.post(`http://localhost:3005/auth/signup`,
-                    JSON.stringify({
+                const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/signup`,
+                  {
                         email: email,
                         password: password,
                         name: name,
-                    }),
+                    },
                 );
                 const user = response.data;
                 this.loggedIn = true;
@@ -30,7 +29,7 @@ export const useAuthStore = defineStore("auth", {
         async login(email, password) {
             try {
 
-                const response = await axios.post("http://localhost:3005/auth/login",
+                const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`,
                     {
                         email: email,
                         password: password,
@@ -54,7 +53,7 @@ export const useAuthStore = defineStore("auth", {
 
             try {
                 await axios.post(
-                    "https://randox-api.onrender.com/auth/logout",
+                    `${import.meta.env.VITE_API_URL}/auth/logout`,
                     {},
                     {
                         headers: {

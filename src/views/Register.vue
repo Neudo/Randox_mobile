@@ -81,7 +81,6 @@ export default defineComponent({
   methods:{
     ...mapActions(useAuthStore, { signUp: 'register'}),
     async register() {
-      console.log('register dans view')
       this.v$.$touch()
 
       this.error = this.v$.$error
@@ -89,7 +88,6 @@ export default defineComponent({
 
 
       try {
-        console.log('okok')
         await this.signUp(this.form.name, this.form.email, this.form.password)
         this.$router.push('/');
       } catch (error) {

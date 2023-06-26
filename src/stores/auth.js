@@ -8,8 +8,9 @@ export const useAuthStore = defineStore("auth", {
     }),
     actions: {
         async register(name, email, password) {
+            console.log('register dans auth')
             try {
-                const response = await axios.post("https://randox-api.onrender.com/auth/signup",
+                const response = await axios.post(`http://localhost:3005/auth/signup`,
                     JSON.stringify({
                         email: email,
                         password: password,
@@ -28,11 +29,12 @@ export const useAuthStore = defineStore("auth", {
         },
         async login(email, password) {
             try {
-                const response = await axios.post("https://randox-api.onrender.com/auth/login",
-                    JSON.stringify({
+
+                const response = await axios.post("http://localhost:3005/auth/login",
+                    {
                         email: email,
                         password: password,
-                    }),
+                    },
                 );
 
                 const user = response.data;

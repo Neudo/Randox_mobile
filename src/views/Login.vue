@@ -54,14 +54,6 @@ export default defineComponent({
     IonItem,
     Error
   },
-  validations () {
-    return {
-      form: {
-        email: {required, email},
-        password: {required},
-      }
-    }
-  },
   data(){
     return{
      form: {
@@ -72,6 +64,14 @@ export default defineComponent({
       errors: []
     }
   },
+  validations () {
+    return {
+      form: {
+        email: {required, email},
+        password: {required},
+      }
+    }
+  },
   methods:{
     ...mapActions(useAuthStore, { signIn: 'login'}),
     async login() {
@@ -80,7 +80,7 @@ export default defineComponent({
       this.error = this.v$.error
       this.errors = this.v$.errors
 
-      if(!this.v$.$error){
+      if(this.v$.$error){
         return
       }
 
@@ -89,10 +89,10 @@ export default defineComponent({
         this.$router.push('/');
       } catch(error) {
         this.error = true
-        this.errors.push({
-          $property: error.name,
-          $message: error.message
-        })
+        // this.errors.push({
+        //   $property: error.name,
+        //   $message: error.message
+        // })
       }
     }
   }

@@ -81,14 +81,12 @@ export default defineComponent({
   methods:{
     ...mapActions(useAuthStore, { signUp: 'register'}),
     async register() {
+      console.log('register dans view')
       this.v$.$touch()
 
       this.error = this.v$.$error
       this.errors = this.v$.$errors
 
-      if (!this.v$.$error) {
-        return
-      }
 
       try {
         console.log('okok')

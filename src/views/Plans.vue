@@ -18,8 +18,8 @@
               <ion-card-header>
                 <ion-card-title>{{plan.title}}</ion-card-title>
                 <ion-card-subtitle>{{plan.price}}€/mois</ion-card-subtitle>
-                <a href="/checkout/" class="cta">S'abonner</a>
                 <form @submit.prevent="openStripe(plan.stripe_id)" action="">
+                  <ion-button type="submit">S'abonner</ion-button>
                   <input type="hidden" name="lookup_key" :value="plan.stripe_id" />
                 </form>
               </ion-card-header>

@@ -99,6 +99,7 @@ export default defineComponent({
       }
     },
     async openStripe(s_id){
+      console.log('clicked cta stripe')
       const url = `${import.meta.env.VITE_API_URL}/checkout/`
       const response = await fetch(url,{
         method: 'POST',
@@ -108,7 +109,7 @@ export default defineComponent({
         body: JSON.stringify({ stripe_id: s_id })
       })
       if (response.ok){
-
+        console.log('res ok')
       }
     }
   }

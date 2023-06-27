@@ -106,6 +106,7 @@ export default defineComponent({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': 'https://friendly-pudding-de97e3.netlify.app', // Remplacez l'URL par celle de votre application Vue.js
         },
         body: JSON.stringify({ stripe_id: s_id })
       })

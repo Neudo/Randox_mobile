@@ -46,6 +46,26 @@
           </ion-label>
         </ion-item>
 
+        <ion-title>À propos</ion-title>
+
+        <ion-item>
+          <ion-label>
+            <ion-menu-toggle router-link="/legal">Mentions légales</ion-menu-toggle>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <ion-menu-toggle router-link="/cgu">CGU / CGV</ion-menu-toggle>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <ion-menu-toggle router-link="/privacy">Politique de confidentialité</ion-menu-toggle>
+          </ion-label>
+        </ion-item>
+
 
       </ion-list>
     </ion-content>
@@ -78,6 +98,10 @@ export default {
 
 ion-menu {
   --ion-background-color: var(--ion-color-primay-blue);
+}
+
+ion-title{
+  color: white;
 }
 
 ion-list{

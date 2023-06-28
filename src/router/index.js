@@ -66,6 +66,21 @@ const routes = [
     name: "Cancel",
     component: () => import("../views/Cancel.vue"),
   },
+  {
+    path: "/legal",
+    name: "Legal",
+    component: () => import("../views/Legal.vue"),
+  },
+  {
+    path: "/cgu",
+    name: "Cgu",
+    component: () => import("../views/Cgu.vue"),
+  },
+  {
+    path: "/privacy",
+    name: "Privacy",
+    component: () => import("../views/Privacy.vue"),
+  },
 
 ];
 

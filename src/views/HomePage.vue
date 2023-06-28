@@ -4,7 +4,7 @@
       <div class="container bg-blue">
         <h1>Découvrez le goût du voyage, tout en gardant le confort de votre foyer.</h1>
         <p>Notre concept est simple : vous souscrivez à un abonnement et nous vous envoyons chaque mois une boîte surprise remplie de délices culinaires authentiques de différentes régions du monde.</p>
-        <router-link class="cta big" to="#offers">Découvrir nos offres</router-link>
+        <router-link class="cta big" to="/abonnements">Découvrir nos offres</router-link>
       </div>
       <img src="/public/cuisine_asiatique.webp" alt="">
 

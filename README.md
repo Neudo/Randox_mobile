@@ -1,4 +1,6 @@
-# Ionic 7 Vue Minimal
+# Randox 
+Commande <br>
 
-A minimal template for Ionic 7 Vue using Javascript.
+npm run dev
+
 # Randox_mobile
